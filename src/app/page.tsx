@@ -1,65 +1,143 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+import SolarPanelsCalculator from "@/components/SolarPanelsCalculator";
+import Image from "next/image";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import {
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Autoplay from "embla-carousel-autoplay";
+
+const cards = [
+  {
+    title: "Panel Solar 450W",
+    description:
+      "Panel monocristalino de alta eficiencia ideal para hogares y oficinas.",
+    price: "$450",
+    image: "/img/solar1.png",
+  },
+  {
+    title: "Inversor Solar 5kW",
+    description:
+      "Convierte la energía solar en electricidad utilizable con máxima estabilidad.",
+    price: "$1,200",
+    image: "/img/solar2.png",
+  },
+  {
+    title: "Batería Solar 10kWh",
+    description: "Almacena energía para usar durante la noche o emergencias.",
+    price: "$3,500",
+    image: "/img/solar3.png",
+  },
+];
+
+export default function SolarPanelsWindow() {
+return (
+  <div className="w-full min-h-screen flex justify-center">
+    <div className="max-w-7xl w-full flex flex-col md:flex-row mt-10">
+
+      {/* Lado izquierdo */}
+      <div className="w-full md:w-3/5 p-6 space-y-4">
+        <h1 className="text-3xl font-bold">
+          Soluciones completas en energía solar para hogares y empresas con máxima eficiencia y garantía
+        </h1>
+
+        <p>
+          Ofrecemos paneles solares de alta eficiencia, instalación certificada y soporte integral. 
+          Ahorra en tu factura de electricidad y contribuye al cuidado del medio ambiente con tecnología limpia.
+        </p>
+
+        {/* Carrusel */}
+        <div className="relative w-full h-64 overflow-hidden">
+          <Carousel
+            opts={{ loop: true }}
+            plugins={[Autoplay({ delay: 3000 })]}
+            className="w-full h-full"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            <CarouselContent>
+              {cards.map((card, idx) => (
+                <CarouselItem key={idx} className="w-full h-64">
+                  
+                  <Card className="flex flex-row items-center p-4 h-full shadow-lg border rounded-xl transition-all hover:shadow-2xl hover:scale-[1.01]">
+                    
+                    {/* Imagen */}
+                    <div className="w-1/2 flex items-center justify-center bg-slate-100 rounded-lg p-3">
+                      <Image
+                        src={card.image}
+                        alt={card.title}
+                        width={220}
+                        height={220}
+                        className="object-contain drop-shadow-md"
+                      />
+                    </div>
+
+                    {/* Contenido */}
+                    <div className="w-1/2 flex flex-col justify-between h-full pl-4">
+
+                      <CardHeader className="p-0">
+                        <CardTitle className="text-xl font-semibold tracking-tight text-slate-900">
+                          {card.title}
+                        </CardTitle>
+                      </CardHeader>
+
+                      <CardContent className="p-0 text-sm text-slate-600 leading-snug mt-1">
+                        {card.description}
+                      </CardContent>
+
+                      <CardFooter className="p-0 flex justify-between items-center mt-4">
+                        <span className="font-bold text-green-600 text-lg">
+                          {card.price}
+                        </span>
+
+                        <Button
+                          className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-lg flex gap-1 items-center"
+                        >
+                          Ver más
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={2}
+                            stroke="currentColor"
+                            className="w-4 h-4"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M17.25 12l-6.75 6.75m0-13.5L17.25 12"
+                            />
+                          </svg>
+                        </Button>
+
+                      </CardFooter>
+                    </div>
+
+                  </Card>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </div>
-      </main>
+      </div>
+
+      {/* Lado derecho */}
+      <div className="w-full md:w-2/5 p-6 flex items-start justify-center md:justify-end">
+        <div className="w-full max-w-sm">
+          <SolarPanelsCalculator />
+        </div>
+      </div>
+
     </div>
-  );
+  </div>
+)
+
 }
