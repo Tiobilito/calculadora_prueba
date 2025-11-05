@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import {
@@ -11,16 +11,19 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Wand2 } from "lucide-react";
+import SolarIAConfigDialog from "./SolarIAConfigDialog";
 
 export default function SolarPanelsCalculator() {
   const [consumoDiario, setConsumoDiario] = useState<number | "">("");
   const [potenciaPanel, setPotenciaPanel] = useState<number | "">("");
   const [horasSol, setHorasSol] = useState<number | "">("");
   const [paneles, setPaneles] = useState<number | null>(null);
+  const [openIA, setOpenIA] = useState(false);
 
   const calcular = () => {
     if (!consumoDiario || !potenciaPanel || !horasSol) return;
-    const energiaDiariaPanel = (Number(potenciaPanel) / 1000) * Number(horasSol);
+    const energiaDiariaPanel =
+      (Number(potenciaPanel) / 1000) * Number(horasSol);
     const necesarios = Number(consumoDiario) / energiaDiariaPanel;
     setPaneles(Math.ceil(necesarios));
   };
@@ -87,16 +90,14 @@ export default function SolarPanelsCalculator() {
 
         {/* Botones */}
         <div className="flex gap-2 w-full">
-          <Button
-            onClick={calcular}
-            className="w-[80%]"
-          >
+          <Button onClick={calcular} className="w-[80%]">
             Calcular
           </Button>
 
           <Button
             variant="secondary"
             className="w-[20%] flex items-center justify-center"
+            onClick={() => setOpenIA(true)}
           >
             <Wand2 className="w-5 h-5" />
           </Button>
@@ -107,8 +108,10 @@ export default function SolarPanelsCalculator() {
             Se necesitan aproximadamente {paneles} paneles solares.
           </div>
         )}
-
       </CardContent>
+
+      <SolarIAConfigDialog open={openIA} onOpenChange={setOpenIA} />
+
     </Card>
   );
 }
